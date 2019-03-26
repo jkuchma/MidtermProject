@@ -1,51 +1,135 @@
 package pkgShape;
 
-public class Cuboid extends Shape{
-	int Length, Width, Height;
+import java.util.Comparator;
 
-	public int getLength() {
-		return Length;
-	}
+public class Cuboid extends Rectangle {
 
-	public void setLength(int length) {
-		Length = length;
-	}
+	private int Depth;
+	
+	public Cuboid(int Width, int Length, int depth) {
 
-	public int getWidth() {
-		return Width;
-	}
-
-	public void setWidth(int width) {
-		Width = width;
-	}
-
-	public int getHeight() {
-		return Height;
-	}
-
-	public void setHeight(int height) {
-		Height = height;
-	}
-
-	public Cuboid(int length, int width, int height) {
+		super(Width, Length);
 		
-		if (length < 0 || width < 0 || height < 0) {
-			throw new IllegalArgumentException("Length, Width, or Height cannot be negative.");
+		if(Width < 0 || Length < 0 || depth < 0) {
+			throw new IllegalArgumentException();
 		}
 		else {
-			this.Length = length;
-			this.Width = width;
-			this.Height = height;
+			this.Depth = depth; 
+			
 		}
+
+		
+
 	}
-	
+
+
+
+	public int getDepth() {
+
+		return Depth;
+
+	}
+
+
+
+	public void setDepth(int Depth) {
+
+		this.Depth = Depth;
+
+	}
+
+	public double volume() {
+
+		return super.area()*Depth;
+
+	}
+
+	@Override
+
 	public double area() {
-		return Length * Width * Height;
+
+		return 2*(super.area()+super.getLength()*Depth+Depth*super.getWidth());
+
 	}
+
+	@Override 
+
 	public double perimeter() {
-		return 4*(Length + Width + Height);
+
+		throw new UnsupportedOperationException();
+
 	}
+
 	
+
 	
+
+	public int compareTo(Object cube) {
+
+		Cuboid c = (Cuboid) cube; 
+
+		if(this.area()<c.area())
+
+			return -1;	
+
+		else if (this.area()>c.area())
+
+			return 1; 
+
+		else 
+
+			return 0; 
+
+		
+
+	}
+
+	public static class SortByArea implements Comparator<Cuboid> {
+
+		public SortByArea(){
+
+			super();
+
+		}
+
+		public int compare(Cuboid a, Cuboid b) {
+
+			return a.compareTo(b);		
+
+		}
+
+		 
+
+	}
+
+	public static class SortByVolume implements Comparator<Cuboid> {	
+
+		public SortByVolume(){
+
+			super();
+
+		}
+
+		public int compare(Cuboid a, Cuboid b) {
+
+			if(a.volume()<b.volume())
+
+				return -1;	
+
+			else if (a.volume()>b.volume())
+
+				return 1; 
+
+			else 
+
+				return 0; 
+
+		}
+
+		
+
+	}
+
+		
 
 }
